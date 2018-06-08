@@ -1,4 +1,42 @@
-[giải nén()][3] là 1 hàm bổ sung cho hàm  [nén()][4] – nó chuyển dữ liệu nhị phân thành các 1 mảng liên kết dựa theo định dạng cụ thể. Nó phần nào giống với _sprintf_, chuyển dữ liệu chuỗi dựa vào định dạng cho trước. 2 hàm này cho phép chúng ta đọc và biết các bộ đêm dữ liệu nhị phân từ các định dạng chuỗi cụ thể. Nó cho phép chúng ta dễ dàng chuyển đổi dữ liệu với các chương trình được viết trong cách ngôn ngữ hay định dạng khác. Xem 1 ví dụ nhỏ sau đây.
+[Source](https://www.codediesel.com/php/unpacking-binary-data/ "Permalink to Unpacking binary data in PHP")
+
+# Giải nén dữ liệu nhị phân trong PHP
+
+Hiếm khi chúng ta được yêu cầu làm việc với các file nhị phân trong PHP.Tuy nhiên khi cần thiết thì hàm 'nén' và 'giải nén' của PHP lại giúp ích rất nhiều. Chúng ta sẽ bắt đầu với 1 vấn đề lập trình, nó sẽ được thảo luận trong 1 hoàn cảnh liên quan. Vấn đề ở đây là : chúng ta muốn viết 1 hàm nhận biến là file ảnh và cho chúng ta biết đó có phải là file ảnh GIF hay không; bất kể là file ảnh có đuôi file thế nào. Chúng ta sẽ không sử dụng bất cứ hàm thư viện GD nào.
+
+#### Header của 1 file GIF
+
+Với yêu cầu không được sử dụng bất kỳ hàm đồ họa nào, để giải quyết vấn đề này chúng ta cần phải lấy những dữ liệu liên quan từ chính file GIF. Không giống như HTML hay XML hay các file định dạng văn bản khác, 1 file GIF và hầu hết các định dạng ảnh khác được lưu ở định dạng nhị phân.Hầu hết các file nhị phân có header ở trên đầu file chứa thông tin  meta  về file cụ thể. Chúng ta có thể sử dụng thông tin này để biết được loại file và những thứ khác, như là chiều cao và chiều rộng trong trường hợp file GIF. 1 header GIF thô điển hình sẽ như bên dưới, sử dụng cái trình soạn thảo hex như là [WinHex][1]. 
+
+![][2]
+
+Mô tả chi tiết của header header ở bên dưới.
+
+| ----- |
+| 
+    
+    
+    Offset   Length   Contents
+      0      3 bytes  "GIF"
+      3      3 bytes  "87a" or "89a"
+      6      2 bytes  
+      8      2 bytes  
+     10      1 byte   bit 0:    Global Color Table Flag (GCTF)
+                      bit 1..3: Color Resolution
+                      bit 4:    Sort Flag to Global Color Table
+                      bit 5..7: Size of Global Color Table: 2^(1+n)
+     11      1 byte   
+     12      1 byte   
+     13      ? bytes  
+             ? bytes  
+             1 bytes   (0x3b)
+
+ | 
+
+Vì vậy để kiểm tra file ảnh có phải file GIF hợp lệ không, chúng ta cần kiểm tra 3 byte khởi đầu của header, chúng là dấu hiệu 'GIF', và 3 byte tiếp theo, là số phiên bản; là '87a' hoặc là '89a'. Những lúc này thì hàm unpack() là thực sự cần thiết. Trước khi chúng ta tìm giải pháp, nhìn qua xem hàm unpack() hoạt động thế nào.
+
+#### Sử dụng hàm unpack() 
+[Giải nén()][3] là 1 hàm bổ sung cho hàm  [nén()][4] – nó chuyển dữ liệu nhị phân thành các 1 mảng liên kết dựa theo định dạng cụ thể. Nó phần nào giống với _sprintf_, chuyển dữ liệu chuỗi dựa vào định dạng cho trước. 2 hàm này cho phép chúng ta đọc và biết các bộ đêm dữ liệu nhị phân từ các định dạng chuỗi cụ thể. Nó cho phép chúng ta dễ dàng chuyển đổi dữ liệu với các chương trình được viết trong cách ngôn ngữ hay định dạng khác. Xem 1 ví dụ nhỏ sau đây.
 
 
 | ----- |
