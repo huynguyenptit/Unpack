@@ -71,7 +71,7 @@ Nó sẽ in ra dòng sau đây, mã thập phân của 'codediesel' :
 
 Trong ví dụ bên trên, tham số đầu tiên là định dạng chuỗi và cái thứ 2 là dữ liệu thực tế. Định dạng chuỗi đặc tả cách mà dữ liệu nên được chuyển đổi thành. Trong ví dụ này phần đầu tiên của định dạng 'C', cho biết chúng ta cần coi kí tự đầu tiên của dữ liệu như 1 byte không dấu. Phần tiếp theo '*', làm cho hàm áp dụng các mã định dạng đăc tả cho tất cả các kí tự còn lại.
 
-Mặc dù điều này có vẻ hơi khó hiểun, phần tiếp theo cung cấp 1 vị dụ cụ thể.
+Mặc dù điều này có vẻ hơi khó hiểu, phần tiếp theo cung cấp 1 vị dụ cụ thể.
 #### Thu thập dữ liệu header
 
 Dười đây là cách giải quyết cho bài toán GIF sử dụng hàm giải nén(). Hàm _is_gif()_ sẽ trả về true nếu file đưa vào ở định dạng GIF.
