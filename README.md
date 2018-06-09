@@ -106,7 +106,7 @@ Dười đây là cách giải quyết cho bài toán GIF sử dụng hàm giả
 
  | 
 
-Dòng quan trọng cần lưu lại là dòng đặc tả định dạng. Kí tự 'A6' làm hàm giari nén() lấy 6 byte đầu tiên của dữ liệu và biên dịch thành 1 chuỗi. Dữ liệu nhận được sau đó sẽ được lưu trữ trong 1 mảng liên kết với khóa là 'version'.
+Dòng quan trọng cần lưu lại là dòng đặc tả định dạng. Kí tự 'A6' làm hàm giải nén() lấy 6 byte đầu tiên của dữ liệu và biên dịch thành 1 chuỗi. Dữ liệu nhận được sau đó sẽ được lưu trữ trong 1 mảng liên kết với khóa là 'version'.
 
 
 1 ví dụ khác được cho dưới đây. Nó có thêm 1 vài dữ liệu header của file GIF, bao gồm chiều rộng và chiều cao ảnh.
