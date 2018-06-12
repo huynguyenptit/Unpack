@@ -1,16 +1,14 @@
-[Source](https://www.codediesel.com/php/unpacking-binary-data/ "Permalink to Unpacking binary data in PHP")
-
 # Giải nén dữ liệu nhị phân trong PHP
 
-Hiếm khi chúng ta được yêu cầu làm việc với các file nhị phân trong PHP.Tuy nhiên khi cần thiết thì hàm 'nén' và 'giải nén' của PHP lại giúp ích rất nhiều. Chúng ta sẽ bắt đầu với 1 vấn đề lập trình, nó sẽ được thảo luận trong 1 hoàn cảnh liên quan. Vấn đề ở đây là : chúng ta muốn viết 1 hàm nhận biến là file ảnh và cho chúng ta biết đó có phải là file ảnh GIF hay không; bất kể là file ảnh có đuôi file thế nào. Chúng ta sẽ không sử dụng bất cứ hàm thư viện GD nào.
+Hiếm khi chúng ta được yêu cầu làm việc với các file nhị phân trong PHP.Tuy nhiên khi cần thiết thì hàm 'pack' và 'unpack' của PHP lại giúp ích rất nhiều. Chúng ta sẽ bắt đầu với 1 vấn đề lập trình, điều này sẽ giữ cho bài viết được nhất quán liền mạch về ngữ cảnh của bài viết. Vấn đề ở đây là : chúng ta muốn viết 1 hàm nhận biến là file ảnh và cho chúng ta biết đó có phải là file ảnh GIF hay không; bất kể là file ảnh có đuôi file thế nào. Chúng ta sẽ không sử dụng bất cứ hàm thư viện GD nào.
 
 #### Header của 1 file GIF
 
-Với yêu cầu không được sử dụng bất kỳ hàm đồ họa nào, để giải quyết vấn đề này chúng ta cần phải lấy những dữ liệu liên quan từ chính file GIF. Không giống như HTML hay XML hay các file định dạng văn bản khác, 1 file GIF và hầu hết các định dạng ảnh khác được lưu ở định dạng nhị phân.Hầu hết các file nhị phân có header ở trên đầu file chứa thông tin  meta  về file cụ thể. Chúng ta có thể sử dụng thông tin này để biết được loại file và những thứ khác, như là chiều cao và chiều rộng trong trường hợp file GIF. 1 header GIF thô điển hình sẽ như bên dưới, sử dụng cái trình soạn thảo hex như là [WinHex][1]. 
+Với yêu cầu không được sử dụng bất kỳ hàm trong thư viện đồ họa nào, để giải quyết vấn đề này chúng ta cần phải lấy những dữ liệu liên quan từ chính file GIF. Không giống như HTML hay XML hay các file định dạng văn bản khác, 1 file GIF và hầu hết các định dạng ảnh khác được lưu ở định dạng nhị phân.Hầu hết các file nhị phân có header ở trên đầu file chứa thông tin  meta  về file cụ thể. Chúng ta có thể sử dụng thông tin này để biết được loại file và những thứ khác, như là chiều cao và chiều rộng trong trường hợp file GIF. 1 header GIF thô điển hình sẽ như bên dưới, sử dụng cái trình soạn thảo hex như là [WinHex][1]. 
 
 ![][2]
 
-Mô tả chi tiết của header header ở bên dưới.
+Mô tả chi tiết về header ở bên dưới.
 
 | ----- |
 | 
@@ -33,10 +31,11 @@ Mô tả chi tiết của header header ở bên dưới.
 
  | 
 
-Vì vậy để kiểm tra file ảnh có phải file GIF hợp lệ không, chúng ta cần kiểm tra 3 byte khởi đầu của header, chúng là dấu hiệu 'GIF', và 3 byte tiếp theo, là số phiên bản; là '87a' hoặc là '89a'. Những lúc này thì hàm unpack() là thực sự cần thiết. Trước khi chúng ta tìm giải pháp, nhìn qua xem hàm unpack() hoạt động thế nào.
+Vì vậy để kiểm tra file ảnh có phải file GIF hợp lệ không, chúng ta cần kiểm tra 3 byte khởi đầu của header, nơi có dấu hiệu 'GIF', và 3 byte tiếp theo, là số phiên bản; là '87a' hoặc là '89a'. Những lúc này thì hàm unpack() là thực sự cần thiết. Trước khi chúng ta tìm giải pháp, nhìn qua xem hàm unpack() hoạt động thế nào.
 
 #### Sử dụng hàm unpack() 
-[Giải nén()][3] là 1 hàm bổ sung cho hàm  [nén()][4] – nó chuyển dữ liệu nhị phân thành các 1 mảng liên kết dựa theo định dạng cụ thể. Nó phần nào giống với _sprintf_, chuyển dữ liệu chuỗi dựa vào định dạng cho trước. 2 hàm này cho phép chúng ta đọc và biết các bộ đêm dữ liệu nhị phân từ các định dạng chuỗi cụ thể. Nó cho phép chúng ta dễ dàng chuyển đổi dữ liệu với các chương trình được viết trong cách ngôn ngữ hay định dạng khác. Xem 1 ví dụ nhỏ sau đây.
+
+[unpack()][3] là 1 hàm bổ sung cho hàm  [pack()][4] – nó chuyển dữ liệu nhị phân thành các 1 mảng liên kết dựa theo định dạng cụ thể. Nó là một thứ gì đó xuyên suốt ở các dòng _sprintf_, chuyển dữ liệu chuỗi dựa vào định dạng cho trước. 2 hàm này cho phép chúng ta đọc và biết các bộ đêm dữ liệu nhị phân từ các định dạng chuỗi cụ thể. Nó cho phép chúng ta dễ dàng chuyển đổi dữ liệu với các chương trình được viết trong cách ngôn ngữ hay định dạng khác. Xem 1 ví dụ nhỏ sau đây.
 
 
 | ----- |
@@ -71,7 +70,7 @@ Nó sẽ in ra dòng sau đây, mã thập phân của 'codediesel' :
 
 Trong ví dụ bên trên, tham số đầu tiên là định dạng chuỗi và cái thứ 2 là dữ liệu thực tế. Định dạng chuỗi đặc tả cách mà dữ liệu nên được chuyển đổi thành. Trong ví dụ này phần đầu tiên của định dạng 'C', cho biết chúng ta cần coi kí tự đầu tiên của dữ liệu như 1 byte không dấu. Phần tiếp theo '*', làm cho hàm áp dụng các mã định dạng đăc tả cho tất cả các kí tự còn lại.
 
-Mặc dù điều này có vẻ hơi khó hiểu, phần tiếp theo cung cấp 1 vị dụ cụ thể.
+Mặc dù điều này có vẻ hơi khó hiểu, phần tiếp theo cung cấp các ví dụ cụ thể.
 #### Thu thập dữ liệu header
 
 Dười đây là cách giải quyết cho bài toán GIF sử dụng hàm giải nén(). Hàm _is_gif()_ sẽ trả về true nếu file đưa vào ở định dạng GIF.
@@ -150,7 +149,7 @@ Dòng quan trọng cần lưu lại là dòng đặc tả định dạng. Kí t�
 
  | 
 
-Ví dụ trên khi chạy sẽ in ra dòng bên như bên dứoi
+Ví dụ trên sẽ in ra như dưới đây khi chạy
 
 | ----- |
 | 
